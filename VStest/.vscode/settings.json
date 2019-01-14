@@ -1,0 +1,8 @@
+{
+    "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
+    "files.associations": {
+        "cycfg.h": "c",
+        "cycfg_pins.h": "c",
+        "cy_gpio.h": "c"
+    }
+}

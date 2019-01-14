@@ -1,0 +1,37 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "CM4 Debug Kitprog",
+            "type": "cortex-debug",
+            "request": "launch",
+            "device": "PSoC6",
+            "servertype": "openocd",
+            "cwd": "${workspaceRoot}/build",
+            "executable": "VStest4_signed.elf",
+            "searchDir": [
+                "C:/ModusToolbox_1.0/tools/openocd-1.0/scripts"
+            ],
+            "configFiles": [
+                "${workspaceRoot}/config/openocd/board_cm4.cfg"
+            ],
+            "preLaunchCommands": ["set mem inaccessible-by-default off"],
+            "postLaunchCommands": [
+                "mon psoc6 reset_halt sysresetreq",
+                // use "b main" to break at main(), use b Cy_OnResetUser to break at the Reset Handler
+                //"b Cy_OnResetUser",
+                "b main",
+                "continue"
+            ],
+            "postRestartCommands": [
+                //use "b main" to break at main(), use b Cy_OnResetUser to break at reset Handler
+                //"b Cy_OnResetUser",
+                "b main",
+                "continue"
+            ]
+        }
+    ]
+}

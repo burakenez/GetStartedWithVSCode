@@ -1,0 +1,5 @@
+# Exclude cmake build directories
+VStest/cmake-build*./**
+VStest/build/
+**/local\.cmake
+**/\.idea

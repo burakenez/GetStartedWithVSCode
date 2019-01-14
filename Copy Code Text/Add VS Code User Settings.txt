@@ -1,0 +1,15 @@
+{
+    "cmake.preferredGenerators": [ 
+        "MinGW Makefiles", 
+        "Ninja", 
+        "Unix Makefiles" 
+        ], 
+        // Location of the CMake executable 
+        "cmake.cmakePath": "C:/Program Files/CMake/bin/cmake.exe", 
+        "git.ignoreMissingGitWarning": true, 
+        "terminal.integrated.rendererType": "dom", 
+        // Location of the OpenOCD executable 
+        "cortex-debug.openocdPath": "C:/ModusToolbox_1.0/tools/openocd-1.0/bin/openocd.exe", 
+        "cmake.configureOnOpen": true, 
+        "cmake.sourceDirectory": "${workspaceRoot}"
+}

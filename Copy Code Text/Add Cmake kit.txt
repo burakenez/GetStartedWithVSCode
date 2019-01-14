@@ -1,0 +1,12 @@
+[
+    { 
+        "name": "GCC for arm-none-eabi 7.3.1", 
+        "compilers": { 
+            "C": "C:\\Program Files (x86)\\GNU Tools Arm Embedded\\8 2018-q4-major\\bin\\arm-none-eabi-gcc.exe", 
+            "CXX": "C:\\Program Files (x86)\\GNU Tools Arm Embedded\\8 2018-q4-major\\bin\\arm-none-eabi-g++.exe" 
+        }, 
+        "preferredGenerator": { 
+            "name": "MinGW Makefiles" 
+        } 
+    }
+]
