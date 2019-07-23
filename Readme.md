@@ -119,43 +119,139 @@
       * After doing that, please press the button again on the programmer, so the LED3 starts flashing in and out slowly. 
       * Close the PSoC ProgrammerGo to launch.json (double click)
     - Copy the following code and paste it over everything in that file: 
-    ```javascript
-    {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
+    
     "configurations": [
-      {
-        "name": "CM4 Debug Kitprog",
-        "type": "cortex-debug",
-        "request": "launch",
-        "device": "PSoC6",
-        "servertype": "openocd",
-        "cwd": "${workspaceRoot}/build",
-        "executable": "VStest4_signed.elf",
-        "searchDir": ["C:/ModusToolbox_1.0/tools/openocd-1.0/scripts"],
-        "configFiles": ["${workspaceRoot}/config/openocd/board_cm4.cfg"],
-        "preLaunchTask": "",
-        "preLaunchCommands": ["set mem inaccessible-by-default off","mon psoc6 reset_halt sysresetreq"],
-        "postLaunchCommands": [
-          // use "b main" to break at main(), use b Cy_OnResetUser to break at the Reset Handler
-          //"b Cy_OnResetUser",
-          "b main","continue"
-          ],
-        "postRestartCommands": [// use "b main" to break at main(), use b Cy_OnResetUser to break at the Reset Handler//"b Cy_OnResetUser",
-          "b main","continue"
-          ]
+
+        {
+            "name": "CM4 Debug Kitprog",
+            "type": "cortex-debug",
+            "request": "launch",
+            "device": "PSoC6",
+            "servertype": "openocd",
+            "executable": "${workspaceRoot}/build/MyApp.elf",
+            "svdFile": "${workspaceFolder}/config/svd/psoc6_01.svd",
+            "windows": {
+                "searchDir": [ "C:/ModusToolbox_1.1/tools/openocd-2.1/scripts" ],
+            },
+            "linux": {  // Assuming modustoolbox is installed in /opt
+                "command": "/opt/ModusToolbox_1.1/tools/openocd-2.1/scripts"
+            },
+            "osx": {
+                "searchDir": [ "/Applications/ModusToolbox_1.1/tools/openocd-2.1/scripts" ],
+            },
+            "configFiles": [
+                "${workspaceRoot}/config/debug/CM4_kitprog.cfg"
+            ],
+            "cwd": "${workspaceRoot}/build",
+            "preLaunchTask": "Build All: Debug",
+            "preLaunchCommands": [
+                "set mem inaccessible-by-default off",
+                "mon targets psoc6.cpu.cm4",
+                "mon arm semihosting enable"
+            ],
+            "postLaunchCommands": [
+                "set output-radix 16",         // uncomment if you want decimal output instead of hexadecimal
+                "tbreak main",
+                "mon reset run",
+                "mon psoc6 reset_halt",
+                "continue",                    // uncomment for breaking at main, comment for breaking at first instruction
+                "mon reg"
+            ],
+            "postRestartCommands": [
+                "tbreak main",
+                "mon reset run",
+                "mon psoc6 reset_halt",
+                "continue"                    // uncomment for breaking at main, comment for breaking at first instruction
+            ]
+        },
+        {
+            "name": "CM4 Debug J-Link (OCD)",
+            "type": "cortex-debug",
+            "request": "launch",
+            "device": "PSoC6",
+            "servertype": "openocd",
+            "executable": "${workspaceRoot}/build/MyApp.elf",
+            "svdFile": "${workspaceFolder}/config/svd/psoc6_01.svd",
+            "windows": {
+                "searchDir": [ "C:/ModusToolbox_1.1/tools/openocd-2.1/scripts" ],
+            },
+            "linux": {  // Assuming modustoolbox is installed in /opt
+                "command": "/opt/ModusToolbox_1.1/tools/openocd-2.1/scripts"
+            },
+            "osx": {
+                "searchDir": [ "/Applications/ModusToolbox_1.1/tools/openocd-2.1/scripts" ],
+            },
+            "configFiles": [
+                "${workspaceRoot}/config/debug/CM4_JLink.cfg"
+            ],
+            "cwd": "${workspaceRoot}/build",
+            "preLaunchTask": "Build All: Debug",
+            "preLaunchCommands": [
+                "set mem inaccessible-by-default off",
+                "mon targets psoc6.cpu.cm4",
+                "mon arm semihosting enable"
+            ],
+            "postLaunchCommands": [
+                "set output-radix 16",         // uncomment if you want decimal output instead of hexadecimal
+                "tbreak main",
+                "mon reset run",
+                "mon psoc6 reset_halt",
+                "continue",                   // uncomment for breaking at main, comment for breaking at first instruction
+                "mon reg"
+            ],
+            "postRestartCommands": [
+                "tbreak main",
+                "mon reset run",
+                "mon psoc6 reset_halt",
+                "continue"                    // uncomment for breaking at main, comment for breaking at first instruction
+            ]
+        },
+        {
+            "name": "CM4 Debug J-Link",
+            "type": "cortex-debug",
+            "request": "launch",
+            "device": "CY8C6xx7_CM4_sect256KB",
+            "servertype": "jlink",
+            "cwd": "${workspaceRoot}/build",
+            "executable": "MyApp.elf",
+            //"debuggerArgs": ["-singlerun -strict -timeout 0 -nogui"],
+            "svdFile": "${workspaceFolder}/config/svd/psoc6_01.svd",
+            "interface": "swd",
+            "preLaunchTask": "Build All: Debug",
+            "preLaunchCommands": [
+                "set mem inaccessible-by-default off",
+                "monitor speed 1000",
+                "monitor clrbp",
+                "monitor reset 0",
+                "monitor halt",
+                "monitor regs",
+                "monitor speed auto",
+                "monitor flash breakpoints 1",
+                "monitor semihosting enable"
+            ],
+            "postLaunchCommands": [
+                "monitor clrbp",
+                "monitor reset 2",
+                "monitor halt",
+                "monitor reset 0",
+                "tbreak main",
+                "monitor regs",
+                "continue",             // uncomment for breaking at main, comment for breaking at first instruction
+                "monitor halt"          // uncomment for breaking at main, comment for breaking at first instruction
+            ],
+            "postRestartCommands": [
+                "monitor clrbp",
+                "monitor reset 2",
+                "monitor halt",
+                "monitor reset 0",
+                "tbreak main",
+                "monitor regs",
+                "continue",
+                "monitor halt",
+            ],
         }
-      ]
-    }
-    ```
+    ]
+    
     - SAVE (Ctrl + S)
     - Press “Build” at the bottom and press debug (green triangle)
     - If it is debugging but the LED is not flashing please check if in the PINs drive mode for the LED you have selected Strong drive input buffer off
-1. VScode Cortex-debug has an annoying debug focus, which is solved here https://github.com/Marus/cortex-debug/issues/106
-    - Comment line 70 in extension.js
-    ```javascript
-    //                vscode.debug.activeDebugSession.customRequest('set-active-editor',
-    ```
-    - in path: C:\Users\<username>\.vscode\extensions\marus25.cortex-debug-0.1.21\out\src\frontend
