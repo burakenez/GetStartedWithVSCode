@@ -120,8 +120,8 @@
       * Close the PSoC ProgrammerGo to launch.json (double click)
     - Copy the following code and paste it over everything in that file: 
     
+    ```
     "configurations": [
-
         {
             "name": "CM4 Debug Kitprog",
             "type": "cortex-debug",
@@ -251,7 +251,7 @@
             ],
         }
     ]
-    
+    ```
     - SAVE (Ctrl + S)
     - Press “Build” at the bottom and press debug (green triangle)
     - If it is debugging but the LED is not flashing please check if in the PINs drive mode for the LED you have selected Strong drive input buffer off
