@@ -1,4 +1,14 @@
-# Windows Installation procedure
+
+# OUTDATED
+
+This guide contains outdated settings and even undesired settings / extension changes / batchfiles
+
+Use at your own risk!
+
+Please use the instructions over here.
+https://github.com/onethinx/PSoC6VScodeTemplate
+
+## Windows Installation procedure
 
 1. Install Modus Toolbox
     - install dir: **C:\ModusToolbox_1.0**
