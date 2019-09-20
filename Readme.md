@@ -8,6 +8,9 @@ Use at your own risk!
 Please use the instructions over here.
 https://github.com/onethinx/PSoC6VScodeTemplate
 
+▼ Outdated ▼
+
+
 ## Windows Installation procedure
 
 1. Install Modus Toolbox
